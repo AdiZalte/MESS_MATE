@@ -11,8 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(
-        name = "daily_menu"
-//        uniqueConstraints = @UniqueConstraint(columnNames = {"mess_id", "date"})
+        name = "daily_menu",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"mess_id", "date"})
 )
 @Data
 public class DailyMenu {

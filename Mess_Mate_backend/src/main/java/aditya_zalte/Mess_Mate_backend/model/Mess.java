@@ -21,11 +21,6 @@ public class Mess {
     @JoinColumn(name = "mess_owner_id", unique = true)
     private MessOwner owner;
 
-    @OneToMany(mappedBy = "mess",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<WeeklyMenu> weeklyMenus;
-
     private String name;
 
     @Column(length = 50)

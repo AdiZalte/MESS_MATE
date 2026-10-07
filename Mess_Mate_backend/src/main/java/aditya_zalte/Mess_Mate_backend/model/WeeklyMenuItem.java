@@ -13,11 +13,11 @@ public class WeeklyMenuItem {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "weekly_menu_id")
+    @JoinColumn(name = "weekly_menu_id" , nullable = false)
     private WeeklyMenu weeklyMenu;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_item_id")
+    @JoinColumn(name = "menu_item_id" , nullable = false)
     private MenuItem menuItem;
 
 }
