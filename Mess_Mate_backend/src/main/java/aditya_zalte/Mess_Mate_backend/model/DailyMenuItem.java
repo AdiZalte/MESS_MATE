@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "daily_menu_item"
-//        uniqueConstraints = @UniqueConstraint(columnNames = {"mess_id", "date", "meal_type"})
+@Table(name = "daily_menu_item",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"mess_id", "date"})
 )
 
 @Data

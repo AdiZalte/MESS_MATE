@@ -20,7 +20,7 @@ public class WeeklyMenu {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mess_id")
+    @JoinColumn(name = "mess_id" , nullable = false)
     private Mess mess;
 
     @Enumerated(EnumType.STRING)

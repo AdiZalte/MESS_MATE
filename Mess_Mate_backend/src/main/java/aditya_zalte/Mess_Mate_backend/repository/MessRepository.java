@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface MessRepository extends JpaRepository<Mess, String> {
 
     Optional<Mess> findByOwnerId(String ownerId);
-
+    Optional<Mess> findByIsVerifiedFalse();
 }
