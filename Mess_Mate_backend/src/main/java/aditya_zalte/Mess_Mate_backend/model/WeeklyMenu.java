@@ -20,15 +20,18 @@ public class WeeklyMenu {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mess_id" , nullable = false)
+    @JoinColumn(name = "mess_id", nullable = false)
     private Mess mess;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DayOfWeek dayOfWeek;
 
-    @OneToMany(mappedBy = "weeklyMenu",
+    @OneToMany(
+            mappedBy = "weeklyMenu",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     private List<WeeklyMenuItem> items;
 
     private LocalDateTime createdAt;

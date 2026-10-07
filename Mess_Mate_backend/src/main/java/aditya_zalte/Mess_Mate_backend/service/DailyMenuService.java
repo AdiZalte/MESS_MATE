@@ -29,24 +29,6 @@ public class DailyMenuService {
     private final MenuItemRepository menuItemRepository;
     private final MessRepository messRepository;
 
-    public void upsertWeek(WeeklyMenuUpsertDto dto, MessOwner owner) {
-
-        Optional<Mess> messOptional =
-                messRepository.findByOwnerId(owner.getId());
-
-        if (messOptional.isEmpty()) {
-            throw new IllegalStateException(
-                    "Register your mess before adding a menu"
-            );
-        }
-
-        Mess mess = messOptional.get();
-
-        for (DailyMenuUpsertDto day : dto.getDays()) {
-            upsertOneDay(day, mess);
-        }
-    }
-
     public void upsertOneDay(DailyMenuUpsertDto dto, Mess mess) {
 
         Optional<DailyMenu> dailyMenuOptional =

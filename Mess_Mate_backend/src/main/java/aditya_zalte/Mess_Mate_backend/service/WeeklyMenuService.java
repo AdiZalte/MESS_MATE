@@ -115,7 +115,6 @@ public class WeeklyMenuService {
                 );
 
         WeeklyMenuResponseDto response = new WeeklyMenuResponseDto();
-
         List<WeeklyMenuDayDto> days = new ArrayList<>();
 
         for (WeeklyMenu weeklyMenu : weeklyMenus) {
@@ -128,9 +127,11 @@ public class WeeklyMenuService {
             for (WeeklyMenuItem weeklyMenuItem : weeklyMenu.getItems()) {
 
                 WeeklyMenuItemDto item = new WeeklyMenuItemDto();
+
                 item.setName(
                         weeklyMenuItem.getMenuItem().getName()
                 );
+
                 item.setIsVeg(
                         weeklyMenuItem.getMenuItem().getIsVeg()
                 );
