@@ -14,5 +14,5 @@ public interface WeeklyMenuRepository extends JpaRepository<WeeklyMenu, String> 
             DayOfWeek dayOfWeek
     );
 
-    List<WeeklyMenu> findByMessIdOrderByDayOfWeek(String messId);
+    List<WeeklyMenu> findByMessId(String messId);
 }

@@ -1,4 +1,4 @@
- package aditya_zalte.Mess_Mate_backend.model;
+package aditya_zalte.Mess_Mate_backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,6 +23,8 @@ public class Admin implements UserDetails {
 
     @Column(nullable = false)
     private String passwordHash;
+
+    private boolean isActive = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,6 +58,6 @@ public class Admin implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 }

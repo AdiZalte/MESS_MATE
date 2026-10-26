@@ -1,6 +1,7 @@
 package aditya_zalte.Mess_Mate_backend.service;
 
 import aditya_zalte.Mess_Mate_backend.dto.CreateMessDto;
+import aditya_zalte.Mess_Mate_backend.dto.MessDetailsResponseDto;
 import aditya_zalte.Mess_Mate_backend.dto.MessResponseDto;
 import aditya_zalte.Mess_Mate_backend.exception.MessNotFoundException;
 import aditya_zalte.Mess_Mate_backend.model.Mess;
@@ -9,16 +10,19 @@ import aditya_zalte.Mess_Mate_backend.repository.MessRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MessService {
 
     private final MessRepository messRepository;
+    private final WeeklyMenuService weeklyMenuService;
 
     public void createMess(CreateMessDto dto, MessOwner owner) {
         // Enforce one mess per owner — this is your "one-time form" rule
 
-        if (messRepository.findByOwnerId(owner.getId()).isPresent()) {
+        if (messRepository.findFirstByOwnerId(owner.getId()).isPresent()) {
             throw new IllegalStateException("This owner has already registered a mess");
         }
 
@@ -47,34 +51,67 @@ public class MessService {
         messRepository.save(mess);
     }
     public MessResponseDto getMyMess(MessOwner owner) {
-        Mess mess = messRepository.findByOwnerId(owner.getId())
+        Mess mess = messRepository.findFirstByOwnerId(owner.getId())
                 .orElseThrow(() -> new MessNotFoundException("No mess registered yet"));
 
         return toDto(mess);
     }
 
+
+    public List<MessResponseDto> getVerifiedMesses() {
+
+        List<Mess> messes =
+                messRepository.findByIsVerifiedTrueAndIsActiveTrue();
+
+        return messes.stream()
+                .map(this::toDto)
+                .toList();
+    }
+
     private MessResponseDto toDto(Mess mess) {
+
         MessResponseDto dto = new MessResponseDto();
+
         dto.setId(mess.getId());
         dto.setName(mess.getName());
         dto.setDescription(mess.getDescription());
         dto.setAddress(mess.getAddress());
         dto.setCity(mess.getCity());
         dto.setLocality(mess.getLocality());
+
         dto.setLatitude(mess.getLatitude());
         dto.setLongitude(mess.getLongitude());
+
         dto.setMessType(mess.getMessType());
         dto.setPriceType(mess.getPriceType());
         dto.setAvgPricePerMeal(mess.getAvgPricePerMeal());
+
         dto.setOpeningTime(mess.getOpeningTime());
         dto.setClosingTime(mess.getClosingTime());
+
         dto.setCoverImageUrl1(mess.getCoverImageUrl1());
         dto.setCoverImageUrl2(mess.getCoverImageUrl2());
         dto.setCoverImageUrl3(mess.getCoverImageUrl3());
-        dto.setIsActive(mess.getIsActive());
-        dto.setIsVerified(mess.getIsVerified());
+
+        dto.setIsVeg(mess.getIsVeg());
+        dto.setIsTiffin(mess.getIsTiffin());
+
         dto.setAvgRating(mess.getAvgRating());
         dto.setTotalRatings(mess.getTotalRatings());
+
+        return dto;
+    }
+
+    public MessDetailsResponseDto getMessDetails(String messId) {
+
+        Mess mess = messRepository
+                .findByIdAndIsVerifiedTrueAndIsActiveTrue(messId)
+                .orElseThrow(() -> new IllegalStateException("Mess not found"));
+
+        MessDetailsResponseDto dto = new MessDetailsResponseDto();
+        dto.setMess(toDto(mess));
+        dto.setWeeklyMenu(weeklyMenuService.getWeeklyMenu(mess));
+
         return dto;
     }
 }

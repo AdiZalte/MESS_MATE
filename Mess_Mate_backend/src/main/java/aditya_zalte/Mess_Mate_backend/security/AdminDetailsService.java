@@ -1,5 +1,6 @@
- package aditya_zalte.Mess_Mate_backend.security;
+package aditya_zalte.Mess_Mate_backend.security;
 
+import aditya_zalte.Mess_Mate_backend.model.Admin;
 import aditya_zalte.Mess_Mate_backend.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,5 +23,3 @@ public class AdminDetailsService implements UserDetailsService {
                         new UsernameNotFoundException("Admin not found"));
     }
 }
-
-

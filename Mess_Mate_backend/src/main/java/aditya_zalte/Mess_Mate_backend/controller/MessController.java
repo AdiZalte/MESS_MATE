@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/owner/mess")
 @RequiredArgsConstructor
@@ -31,4 +33,5 @@ public class MessController {
     public ResponseEntity<MessResponseDto> getMyMess(@AuthenticationPrincipal MessOwner owner) {
         return ResponseEntity.ok(messService.getMyMess(owner));
     }
+
 }

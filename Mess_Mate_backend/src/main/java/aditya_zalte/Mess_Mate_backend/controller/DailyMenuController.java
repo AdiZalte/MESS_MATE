@@ -27,7 +27,7 @@ public class DailyMenuController {
             @Valid @RequestBody DailyMenuUpsertDto dto,
             @AuthenticationPrincipal MessOwner owner
     ) {
-        Mess mess = messRepository.findByOwnerId(owner.getId())
+        Mess mess = messRepository.findFirstByOwnerId(owner.getId())
                 .orElseThrow(() -> new IllegalStateException("No mess registered"));
 
         dailyMenuService.upsertOneDay(dto, mess);

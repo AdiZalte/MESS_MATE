@@ -93,7 +93,7 @@ public class DailyMenuService {
     public List<DailyMenuResponseDto> getWeek(MessOwner owner) {
 
         Optional<Mess> messOptional =
-                messRepository.findByOwnerId(owner.getId());
+                messRepository.findFirstByOwnerId(owner.getId());
 
         if (messOptional.isEmpty()) {
             throw new IllegalStateException("No mess registered");

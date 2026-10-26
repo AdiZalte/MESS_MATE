@@ -2,6 +2,7 @@ package aditya_zalte.Mess_Mate_backend.model;
 
 import aditya_zalte.Mess_Mate_backend.model.enums.MessType;
 import aditya_zalte.Mess_Mate_backend.model.enums.PriceType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,8 +18,9 @@ public class Mess {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mess_owner_id", unique = true)
+     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonIgnore
     private MessOwner owner;
 
     private String name;

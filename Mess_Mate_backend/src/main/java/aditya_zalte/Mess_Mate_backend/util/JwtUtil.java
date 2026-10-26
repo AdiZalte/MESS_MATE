@@ -24,25 +24,33 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secretKeyString.getBytes());
     }
 
-    public String generateToken(String ownerId) {
-        if (ownerId == null || ownerId.isBlank()) {
-            throw new IllegalArgumentException("Cannot generate a token without a valid owner ID");
+    public String generateToken(String userId, String role) {
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("Cannot generate a token without a valid user ID");
         }
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
-                .subject(ownerId)
+                .subject(userId)
+                .claim("role", role)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(getSigningKey())
                 .compact();
     }
-
-    public String extractOwnerId(String token) {
+    public String extractRole(String token) {
         Claims claims = extractAllClaims(token);
-        return claims.getSubject();
+        return claims.get("role", String.class);
+    }
+
+//    public String extractOwnerId(String token) {
+//        Claims claims = extractAllClaims(token);
+//        return claims.getSubject();
+//    }
+    public String extractUserId(String token) {
+        return extractAllClaims(token).getSubject();
     }
 
     public Date extractExpiration(String token) {
