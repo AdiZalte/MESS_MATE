@@ -1,6 +1,7 @@
 package aditya_zalte.Mess_Mate_backend.service;
 
 
+import aditya_zalte.Mess_Mate_backend.dto.AdminAuthResponseDto;
 import aditya_zalte.Mess_Mate_backend.model.Admin;
 import aditya_zalte.Mess_Mate_backend.repository.AdminRepository;
 import aditya_zalte.Mess_Mate_backend.util.JwtUtil;
@@ -18,7 +19,7 @@ public class AdminAuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public String login(String email, String password) {
+    public AdminAuthResponseDto login(String email, String password) {
 
         Admin admin = adminRepository.findByEmail(email)
                 .orElseThrow(() ->
@@ -32,9 +33,7 @@ public class AdminAuthService {
             throw new BadCredentialsException("Admin account is disabled");
         }
 
-        return jwtUtil.generateToken(
-                admin.getId(),
-                "ROLE_ADMIN"
-        );
+        String token = jwtUtil.generateToken(admin.getId(), "ROLE_ADMIN");
+        return new AdminAuthResponseDto(token, admin.getEmail());
     }
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface DailyMenuRepository extends JpaRepository<DailyMenu, String> {
     Optional<DailyMenu> findByMessIdAndDate(String messId, LocalDate date);
     List<DailyMenu> findByMessIdAndDateBetweenOrderByDateAsc(String messId, LocalDate start, LocalDate end);
-
+    void deleteByMessId(String messId);
 }

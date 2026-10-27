@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-const LAN_IP = '192.168.2.109'; // update this if your IP changes again
+const LAN_IP = '10.144.60.40'; // update this if your IP changes again
 
 export const API_BASE_URL = Platform.OS === 'web'
   ? 'http://localhost:8080'

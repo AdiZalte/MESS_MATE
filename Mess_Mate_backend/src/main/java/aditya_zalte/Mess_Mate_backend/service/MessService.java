@@ -94,6 +94,8 @@ public class MessService {
         dto.setCoverImageUrl3(mess.getCoverImageUrl3());
 
         dto.setIsVeg(mess.getIsVeg());
+        dto.setIsActive(mess.getIsActive());
+        dto.setIsVerified(mess.getIsVerified());
         dto.setIsTiffin(mess.getIsTiffin());
 
         dto.setAvgRating(mess.getAvgRating());
@@ -106,7 +108,7 @@ public class MessService {
 
         Mess mess = messRepository
                 .findByIdAndIsVerifiedTrueAndIsActiveTrue(messId)
-                .orElseThrow(() -> new IllegalStateException("Mess not found"));
+                .orElseThrow(() ->new MessNotFoundException("Mess not found"));
 
         MessDetailsResponseDto dto = new MessDetailsResponseDto();
         dto.setMess(toDto(mess));

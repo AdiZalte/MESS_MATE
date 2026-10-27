@@ -32,6 +32,8 @@ public class MessResponseDto {
     private String coverImageUrl3;
 
     private Boolean isVeg;
+    private Boolean isActive;
+    private Boolean isVerified;
     private Boolean isTiffin;
 
     private BigDecimal avgRating;

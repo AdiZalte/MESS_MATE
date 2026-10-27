@@ -15,4 +15,5 @@ public interface WeeklyMenuRepository extends JpaRepository<WeeklyMenu, String> 
     );
 
     List<WeeklyMenu> findByMessId(String messId);
+    void deleteByMessId(String messId);
 }
