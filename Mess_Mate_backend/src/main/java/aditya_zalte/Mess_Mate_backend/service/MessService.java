@@ -19,6 +19,25 @@ public class MessService {
     private final MessRepository messRepository;
     private final WeeklyMenuService weeklyMenuService;
 
+    public List<MessResponseDto> searchMesses(String query) {
+        String keyword = (query == null) ? "" : query.trim();
+
+        List<Mess> result = keyword.isEmpty()
+                ? messRepository.findByIsVerifiedTrueAndIsActiveTrue()   // no search text: list everything
+                : messRepository.searchVerified(keyword);
+
+        return result.stream().map(this::toDto).toList();
+    }
+
+    public List<MessResponseDto> getMessesByIds(List<String> ids) {
+        if (ids == null || ids.isEmpty()) return List.of();
+
+        List<String> limited = ids.stream().limit(50).toList();   // never trust the client with unbounded input
+
+        return messRepository.findByIdInAndIsVerifiedTrueAndIsActiveTrue(limited)
+                .stream().map(this::toDto).toList();
+    }
+
     public void createMess(CreateMessDto dto, MessOwner owner) {
         // Enforce one mess per owner — this is your "one-time form" rule
 

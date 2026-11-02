@@ -16,10 +16,7 @@ public class PublicMessController {
 
     private final MessService messService;
 
-    @GetMapping
-    public ResponseEntity<List<MessResponseDto>> getVerifiedMesses() {
-        return ResponseEntity.ok(messService.getVerifiedMesses());
-    }
+
 
     @GetMapping("/{messId}")
     public ResponseEntity<MessDetailsResponseDto> getMessDetails(
@@ -29,4 +26,18 @@ public class PublicMessController {
                 messService.getMessDetails(messId)
         );
     }
+    @GetMapping
+    public ResponseEntity<List<MessResponseDto>> getMesses(
+            @RequestParam(required = false) String query
+    ) {
+        return ResponseEntity.ok(messService.searchMesses(query));
+    }
+
+    @GetMapping("/by-ids")
+    public ResponseEntity<List<MessResponseDto>> getMessesByIds(
+            @RequestParam(required = false) List<String> ids
+    ) {
+        return ResponseEntity.ok(messService.getMessesByIds(ids));
+    }
+
 }

@@ -34,4 +34,5 @@ public class MessController {
         return ResponseEntity.ok(messService.getMyMess(owner));
     }
 
+
 }
